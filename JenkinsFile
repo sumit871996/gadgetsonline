@@ -1,0 +1,44 @@
+pipeline {
+     agent any
+     environment {
+        dockerImage = ''
+        registry = 'sumithpe/gadgets'
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub_id')
+        PATH = "$PATH:/root/.dotnet/tools"
+    }
+    stages {     
+stage('Build Docker Images') {
+            steps {
+                script {
+                    echo registry
+                    sh 'docker image build -t sumithpe/gadgets ./GadgetsOnline/'
+                }
+            }
+        }
+stage('Upload to DockerHub'){
+            steps {
+                script {
+                       sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                        sh 'docker image push sumithpe/gadgets:latest'
+                        }
+                }
+            }
+
+
+
+
+        stage('docker stop container') {
+         steps {
+            sh 'docker ps -f name=poc6gadgets  -q | xargs --no-run-if-empty docker container stop'
+            sh 'docker container ls -a -fname=poc6gadgets -q | xargs -r docker container rm'
+         }
+       }
+       stage('Docker Run') {
+        steps {
+            script {
+                sh 'docker container run -d -p 8000:80 --rm --name poc6gadgets sumithpe/gadgets'
+                }
+            }
+        }
+    }
+}
