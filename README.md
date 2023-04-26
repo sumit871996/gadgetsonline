@@ -13,10 +13,43 @@ The application code is released under the MIT-0 License
 
 # Pre-Requisites 
 
+On a Windows VM
+{
+1. Docker installed with switched to windows container
+2. Git for Windows.
+}
 
-1. Visual Studio 2019 16.4 or later with the ASP.NET and web development workload
-2. Full .NET Framework 4.0 and 4.8    
-3. SQL Server Management Studio
-4. MS SQL Server (LocalDB version is perfectly suitable with appropriate connection string adjustments).
-5. Git for Windows.
-6. Trial for gitpoll-1
+On a linux VM
+{
+1. Docker installed
+2. jenkins container configured with following steps: (forward port 50000 while running container) 
+}
+
+Steps:
+
+On windows VM:
+step A: docker run -d --name MSSQLLocalDB --env sa_password=#yourpassword sumithpe/sql-server-windows:#tag
+step B: Open Web.config in "./gadgetsonline\GadgetsOnline\GadgetsOnline" location.
+        replace "Password=Sumit@mssql8796" with "Password=#yourpassword" from step A.
+
+On linux VM:
+configure jenkins
+
+dashboard: security > agents > port: fixed : 50000
+dashboard > node > add node > fill properties and save agent
+
+step P: update webhook at github.
+
+step Q: add a freestyle project:
+step R: restrict where project can run: and add label from the slave node
+step S: Link Git repo
+step T: Git polling enable
+
+step U: add build steps:
+
+docker image build -t sumithpe/gadgets ./GadgetsOnline/
+docker image push sumithpe/gadgets
+docker container stop gadgetsonline
+docker container rm gadgetsonline
+docker container start MSSQLLocalDB
+docker container run -d -p 8000:80 --rm --name gadgetsonline sumithpe/gadgets
