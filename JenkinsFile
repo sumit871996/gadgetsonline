@@ -33,13 +33,15 @@ stage('Upload to DockerHub'){
 
         stage('docker stop container') {
          steps {
-            powershell 'docker container rm gadgetsonline'
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') 
+            { powershell 'docker container rm gadgetsonline' }
          }
        }
        stage('Docker Run MSSQL') {
         steps {
             script {
-                powershell 'docker container start MSSQLLocalDB'
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                powershell 'docker container start MSSQLLocalDB'}
                 }
             }
         }
