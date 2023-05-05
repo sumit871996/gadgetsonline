@@ -13,9 +13,8 @@ stage('Build Docker Images') {
             steps {
             
             script{
-                    sh 'ls'
-                 
-                    sh 'docker image build -f ./GadgetsOnline/Dockerfile -t sumithpe/gadgets ./GadgetsOnline/'
+                
+                    powershell 'docker image build -f ./GadgetsOnline/Dockerfile -t sumithpe/gadgets ./GadgetsOnline/'
                     
                     }
             }
