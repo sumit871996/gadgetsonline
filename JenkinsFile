@@ -1,13 +1,10 @@
 pipeline {
      agent {
-     node {
-        label 'Windows_Node'
-    }
+     label 'Windows_Node'
      environment {
         dockerImage = ''
         registry = 'sumithpe/gadgets'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub_id')
-        PATH = "$PATH:/root/.dotnet/tools"
     }
     stages {
     
