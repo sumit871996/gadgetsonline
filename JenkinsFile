@@ -6,8 +6,20 @@ pipeline {
         dockerImage = ''
         registry = 'sumithpe/gadgets'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub_id')
+        Path = "$Path:C:\Program Files\SonarScanner\sonar-scanner-msbuild-5.13.0.66756-net46"
     }
     stages {
+    
+    stage('Sonar Build') {
+            steps {
+            
+            script{
+                    powershell 'cd GadgetsOnline/'
+                    powershell 'SonarScanner.MSBuild.exe begin /k:"gadgetsonline" /d:sonar.host.url="http://20.21.98.133:9000" /d:sonar.login="sqp_ec9afd1e2591bbf36dd7749b102baeaa59b1d629"'
+                    
+                    }
+            }
+        }
     
 stage('Build Docker Images') {
             steps {
