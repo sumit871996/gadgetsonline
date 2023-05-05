@@ -1,5 +1,8 @@
 pipeline {
-     agent Windows_Node
+     agent {
+     node {
+        label 'Windows_Node'
+    }
      environment {
         dockerImage = ''
         registry = 'sumithpe/gadgets'
@@ -49,5 +52,6 @@ stage('Upload to DockerHub'){
                 }
             }
         }
+    }
     }
 }
