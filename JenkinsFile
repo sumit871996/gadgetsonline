@@ -11,10 +11,7 @@ pipeline {
     
 stage('Build Docker Images') {
             steps {
-                script {
-                    echo registry
-                    sh 'docker image build -f ./GadgetsOnline/Dockerfile -t sumithpe/gadgets ./GadgetsOnline/'
-                }
+                    docker image build -f ./GadgetsOnline/Dockerfile -t sumithpe/gadgets ./GadgetsOnline/
             }
         }
 stage('Upload to DockerHub'){
