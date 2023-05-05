@@ -6,8 +6,7 @@ pipeline {
         dockerImage = ''
         registry = 'sumithpe/gadgets'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub_id')
-        Path = "%PATH%;C:\\Program Files\\SonarScanner\\sonar-scanner-msbuild-5.13.0.66756-net46;
-               C:\\Users\\hpe\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Windows PowerShell"
+        Path = "%PATH%;C:\\Program Files\\SonarScanner\\sonar-scanner-msbuild-5.13.0.66756-net46;C:\\Users\\hpe\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Windows PowerShell"
  
     }
     stages {
