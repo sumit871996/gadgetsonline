@@ -13,7 +13,7 @@ stage('Build Docker Images') {
             steps {
             
             script{
-                    sh 'dir'
+                    sh 'ls'
                  
                     sh 'docker image build -f ./GadgetsOnline/Dockerfile -t sumithpe/gadgets ./GadgetsOnline/'
                     
