@@ -22,8 +22,8 @@ stage('Build Docker Images') {
 stage('Upload to DockerHub'){
             steps {
                 script {
-                       sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                        sh 'docker image push sumithpe/gadgets:latest'
+                       powershell 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                        powershell 'docker image push sumithpe/gadgets:latest'
                         }
                 }
             }
@@ -33,14 +33,13 @@ stage('Upload to DockerHub'){
 
         stage('docker stop container') {
          steps {
-            sh 'docker ps -f name=poc6gadgets  -q | xargs --no-run-if-empty docker container stop'
-            sh 'docker container ls -a -fname=poc6gadgets -q | xargs -r docker container rm'
+            powershell 'docker container rm gadgetsonline'
          }
        }
        stage('Docker Run MSSQL') {
         steps {
             script {
-                sh 'docker container start MSSQLLocalDB'
+                powershell 'docker container start MSSQLLocalDB'
                 }
             }
         }
@@ -48,7 +47,7 @@ stage('Upload to DockerHub'){
         stage('Docker Run') {
         steps {
             script {
-                sh 'docker container run -d -p 8000:80 --rm --name poc6gadgets sumithpe/gadgets'
+                powershell 'docker container run -d -p 8000:80 --rm --name gadgetsonline sumithpe/gadgets'
                 }
             }
         }
