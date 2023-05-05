@@ -18,6 +18,15 @@ pipeline {
                     
                     powershell 'SonarScanner.MSBuild.exe begin /k:"gadgetsonline" /d:sonar.host.url="http://20.21.98.133:9000" /d:sonar.login="sqp_ec9afd1e2591bbf36dd7749b102baeaa59b1d629"'
                     powershell 'cd GadgetsOnline ; MsBuild.exe /t:Rebuild'
+                    }
+            }
+        }
+        
+        stage('End Sonar') {
+            steps {
+            
+            script{
+                    
                     powershell 'SonarScanner.MSBuild.exe end /d:sonar.login="sqp_ec9afd1e2591bbf36dd7749b102baeaa59b1d629"'
                     }
             }
