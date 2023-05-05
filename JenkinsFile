@@ -33,7 +33,7 @@ stage('Upload to DockerHub'){
 
         stage('docker stop container') {
          steps {
-            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') 
+            catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') 
             { powershell 'docker container rm gadgetsonline' }
          }
        }
