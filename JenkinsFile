@@ -22,7 +22,7 @@ stage('Build Docker Images') {
 stage('Upload to DockerHub'){
             steps {
                 script {
-                       powershell 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                       powershell 'docker image push sumithpe/gadgets:latest'
                         
                         }
                 }
