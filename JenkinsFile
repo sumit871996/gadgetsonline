@@ -13,7 +13,7 @@ stage('Build Docker Images') {
             steps {
                 script {
                     echo registry
-                    sh 'docker image build -f ./GadgetsOnline/ -t sumithpe/gadgets ./GadgetsOnline/'
+                    sh 'docker image build -f ./GadgetsOnline/Dockerfile -t sumithpe/gadgets ./GadgetsOnline/'
                 }
             }
         }
